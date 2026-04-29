@@ -1,6 +1,7 @@
 package cl.igor.pacientes.controller;
 
 import cl.igor.pacientes.service.PacienteService;
+import cl.igor.pacientes.dto.PacienteRequestDTO;
 import cl.igor.pacientes.dto.PacienteDTO;
 import cl.igor.pacientes.model.Paciente;
 
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,9 +29,10 @@ public class PacienteController {
         return pacienteService.obtenerPorId(id);
     }
     
-    @PostMapping()
-    public Paciente guardarPaciente(@RequestBody Paciente paciente) {
-        return pacienteService.guardar(paciente);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public PacienteDTO guardarPaciente(@RequestBody PacienteRequestDTO pacienteRequestDTO) {
+        return pacienteService.guardar(pacienteRequestDTO);
     }
     
 }
