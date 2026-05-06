@@ -1,6 +1,6 @@
 package cl.igor.pacientes.service;
 
-import cl.igor.pacientes.dto.PacienteDTO;
+import cl.igor.pacientes.dto.PacienteResponseDTO;
 import cl.igor.pacientes.dto.PacienteRequestDTO;
 import cl.igor.pacientes.model.Paciente;
 import cl.igor.pacientes.repository.PacienteRepository;
@@ -15,11 +15,11 @@ public class PacienteService {
 
     private PacienteRepository pacienteRepository;
 
-    public PacienteDTO obtenerPorId(Long id){
+    public PacienteResponseDTO obtenerPorId(Long id){
         Paciente paciente = pacienteRepository.findById(id)
         .orElseThrow(()-> new RuntimeException("Paciente no encontrado"));
         
-        PacienteDTO pacienteDTO = new PacienteDTO();
+        PacienteResponseDTO pacienteDTO = new PacienteResponseDTO();
         pacienteDTO.setId(paciente.getId());
         pacienteDTO.setNombre(paciente.getNombre());
         pacienteDTO.setDocumento(paciente.getDocumento());
@@ -29,7 +29,7 @@ public class PacienteService {
     }
 
     //PacienteDTO se refiere a "PacienteResponseDTO". Asi quedaria PacienteResponseDTO y PacienteRequestDTO
-    public PacienteDTO guardar(PacienteRequestDTO pacienteRequestDTO){
+    public PacienteResponseDTO guardar(PacienteRequestDTO pacienteRequestDTO){
         Paciente paciente = new Paciente();
         paciente.setNombre(pacienteRequestDTO.getNombre());
         paciente.setDocumento(pacienteRequestDTO.getDocumento());
@@ -40,8 +40,8 @@ public class PacienteService {
         return mapToResponseDTO(pacienteGuardado);
     }
 
-    private PacienteDTO mapToResponseDTO(Paciente paciente){
-        PacienteDTO dto = new PacienteDTO();
+    private PacienteResponseDTO mapToResponseDTO(Paciente paciente){
+        PacienteResponseDTO dto = new PacienteResponseDTO();
         dto.setId(paciente.getId());
         dto.setNombre(paciente.getNombre());
         dto.setDocumento(paciente.getDocumento());
